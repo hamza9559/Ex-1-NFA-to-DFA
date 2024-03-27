@@ -19,7 +19,6 @@ Step 4 : Do repeat Step 2 and Step 3 until no new state present in DFA transitio
 Step 5 : Mark the states of DFA which contains final state of NFA as final states of DFA.
 # PROGRAM:
 ```
-// C Program to illustrate how to convert e-nfa to DFA
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -108,6 +107,7 @@ void Display_closure(int states, int closure_ar[],
  // till closure get completely saturated
  while (z != 100)
  {
+ 	
  if (strcmp(&NFA_TABLE[z][symbols], "-") != 0) {
  strcpy(buffer, &NFA_TABLE[z][symbols]);
  // call the check function
@@ -144,8 +144,7 @@ int new_states(struct DFA *dfa, char S[]) {
 }
 // Transition function from NFA to DFA
 // (generally union of closure operation )
-void trans(char S[], int M, char *clsr_t[], int st,
- char *NFT[][symbols + 1], char TB[]) {
+void trans(char S[], int M, char *clsr_t[], int st,char *NFT[][symbols + 1], char TB[]) {
  int len = strlen(S);
  int i, j, k, g;
  int arr[st];
@@ -179,12 +178,12 @@ void trans(char S[], int M, char *clsr_t[], int st,
 void Display_DFA(int last_index, struct DFA *dfa_states,
  char *DFA_TABLE[][symbols]) {
  int i, j;
- printf("\n\n********************************************************\n\n");
+ printf("\n\n**\n\n");
  printf("\t\t DFA TRANSITION STATE TABLE \t\t \n\n");
  printf("\n STATES OF DFA :\t\t");
  for (i = 1; i < last_index; i++)
  printf("%s, ", &dfa_states[i].states);
- printf("\n");
+  printf("\n");
  printf("\n GIVEN SYMBOLS FOR DFA: \t");
  for (i = 0; i < symbols; i++)
  printf("%d, ", i);
@@ -219,7 +218,7 @@ int main() {
  printf("%d, ", i);
  printf("eps");
  printf("\n\n");
- char *NFA_TABLE[states][symbols + 1];
+char *NFA_TABLE[states][symbols + 1];
  // Hard coded input for NFA table
  char *DFA_TABLE[MAX_LEN][symbols];
  strcpy(&NFA_TABLE[0][0], "FC");
@@ -283,38 +282,59 @@ int main() {
  }
  // display the DFA TABLE
  Display_DFA(last_index, dfa_states, DFA_TABLE);
- return 0;
+ return 0;
 }
 ```
 # OUTPUT :
 ```
-STATES OF NFA : A, B, C, D, E, F,
-GIVEN SYMBOLS FOR NFA: 0, 1, eps
-NFA STATE TRANSITION TABLE 
-STATES |0 |1 eps
+
+ STATES OF NFA :                A, B, C, D, E, F,
+
+ GIVEN SYMBOLS FOR NFA:         0, 1, eps
+
+
+ NFA STATE TRANSITION TABLE
+
+
+STATES  |0      |1      eps
 --------+------------------------------------
-A |FC |- |BF 
-B |- |C |- 
-C |- |- |D 
-D |E |A |- 
-E |A |- |BF 
-F |- |- |- 
-e-Closure (A) : ABF
-e-Closure (B) : B
-e-Closure (C) : CD
-e-Closure (D) : D
-e-Closure (E) : BEF
-e-Closure (F) : F
-********************************************************
- DFA TRANSITION STATE TABLE 
-STATES OF DFA : ABF, CDF, CD, BEF,
-GIVEN SYMBOLS FOR DFA: 0, 1,
-STATES |0 |1 
+A       |FC     |-      |BF
+B       |-      |C      |-
+C       |-      |-      |D
+D       |E      |A      |-
+E       |A      |-      |BF
+F       |-      |-      |-
+
+ e-Closure (A) :        ABF
+
+ e-Closure (B) :        B
+
+ e-Closure (C) :        CD
+
+ e-Closure (D) :        D
+
+ e-Closure (E) :        BEF
+
+ e-Closure (F) :        F
+
+
+**
+
+                 DFA TRANSITION STATE TABLE
+
+
+ STATES OF DFA :                ABF, CDF, CD, BEF,
+
+ GIVEN SYMBOLS FOR DFA:         0, 1,
+
+STATES  |0      |1
 --------+-----------------------
-ABF |CDF |CD 
-CDF |BEF |ABF 
-CD |BEF |ABF 
-BEF |ABF |CD 
+ABF     |CDF    |CD
+CDF     |BEF    |ABF
+CD      |BEF    |ABF
+BEF     |ABF    |CD
+
+--------------------------------
 ```
 # RESULT :
 The program was sucessfully converted from NFA to DFA.
